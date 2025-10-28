@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -66,15 +67,19 @@ class AuthController extends Controller
     // 4. Endpoint: /api/me (GET, Protegida)
     public function me()
     {
-        return response()->json(auth('api')->user());
+        $user = auth('api')->user();
+        return new UserResource($user);
     }
 
     protected function respondWithToken($token)
     {
+        $user = auth('api')->user();
+        
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => App::make('auth')->guard('api')->factory()->getTTL() * 60, // Tempo de expiração em segundos
+            'expires_in' => App::make('auth')->guard('api')->factory()->getTTL() * 60,
+            'user' => new UserResource($user)
         ]);
     }
 }

@@ -126,7 +126,7 @@
     <!--begin::Modal - Add task-->
     <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-lg modal-dialog-centered mw-650px">
+        <div class="modal-dialog  modal-dialog-centered mw-950px">
             <!--begin::Modal content-->
             <div class="modal-content">
                 <!--begin::Modal header-->
@@ -214,7 +214,7 @@
                                 <!--end::Image input-->
 
                                 <!--begin::Hint-->
-                                <div class="form-text">Allowed file types: png,
+                                <div class="form-text">Tipos permitidos: png,
                                     jpg, jpeg.</div>
                                 <!--end::Hint-->
                             </div>
@@ -227,8 +227,9 @@
                                 <!--end::Label-->
 
                                 <!--begin::Input-->
-                                <input type="text" name="user_name"
+                                <input id="name" type="text" name="name"
                                     class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Nome Completo">
+                                <div class="invalid-feedback" id="error-name"></div>
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -240,9 +241,38 @@
                                 <!--end::Label-->
 
                                 <!--begin::Input-->
-                                <input type="email" name="user_email"
+                                <input id="email" type="email" name="email"
                                     class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com"
                                     value="smith@kpmg.com">
+                                <div class="invalid-feedback" id="error-email"></div>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+
+                            <!--begin::Input group-->
+                            <div class="fv-row mb-7">
+                                <!--begin::Label-->
+                                <label class="required fw-semibold fs-6 mb-2">Password</label>
+                                <!--end::Label-->
+
+                                <!--begin::Input-->
+                                <input id="password" type="password" name="password"
+                                    class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Password">
+                                <div class="invalid-feedback" id="error-password"></div>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+
+                            <!--begin::Input group-->
+                            <div class="fv-row mb-7">
+                                <!--begin::Label-->
+                                <label class="required fw-semibold fs-6 mb-2">Confirmar Password</label>
+                                <!--end::Label-->
+
+                                <!--begin::Input-->
+                                <input id="password_confirmation" type="password" name="password_confirmation"
+                                    class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Confirm Password">
+                                <div class="invalid-feedback" id="error-password_confirmation"></div>
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -253,130 +283,9 @@
                                 <label class="required fw-semibold fs-6 mb-5">Role</label>
                                 <!--end::Label-->
 
-                                <!--begin::Roles-->
-                                <!--begin::Input row-->
-                                <div class="d-flex fv-row">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio"
-                                            value="0" id="kt_modal_update_role_option_0" checked='checked'>
-                                        <!--end::Input-->
-
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_0">
-                                            <div class="fw-bold text-gray-800">
-                                                Administrator</div>
-                                            <div class="text-gray-600">Best for
-                                                business owners and company
-                                                administrators</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-
-                                <div class='separator separator-dashed my-5'>
-                                </div> <!--begin::Input row-->
-                                <div class="d-flex fv-row">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio"
-                                            value="1" id="kt_modal_update_role_option_1">
-                                        <!--end::Input-->
-
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_1">
-                                            <div class="fw-bold text-gray-800">
-                                                Developer</div>
-                                            <div class="text-gray-600">Best for
-                                                developers or people primarily
-                                                using the API</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-
-                                <div class='separator separator-dashed my-5'>
-                                </div> <!--begin::Input row-->
-                                <div class="d-flex fv-row">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio"
-                                            value="2" id="kt_modal_update_role_option_2">
-                                        <!--end::Input-->
-
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_2">
-                                            <div class="fw-bold text-gray-800">
-                                                Analyst</div>
-                                            <div class="text-gray-600">Best for
-                                                people who need full access to
-                                                analytics data, but don't need
-                                                to update business settings
-                                            </div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-
-                                <div class='separator separator-dashed my-5'>
-                                </div> <!--begin::Input row-->
-                                <div class="d-flex fv-row">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio"
-                                            value="3" id="kt_modal_update_role_option_3">
-                                        <!--end::Input-->
-
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_3">
-                                            <div class="fw-bold text-gray-800">
-                                                Support</div>
-                                            <div class="text-gray-600">Best for
-                                                employees who regularly refund
-                                                payments and respond to disputes
-                                            </div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-
-                                <div class='separator separator-dashed my-5'>
-                                </div> <!--begin::Input row-->
-                                <div class="d-flex fv-row">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio"
-                                            value="4" id="kt_modal_update_role_option_4">
-                                        <!--end::Input-->
-
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_4">
-                                            <div class="fw-bold text-gray-800">
-                                                Trial</div>
-                                            <div class="text-gray-600">Best for
-                                                people who need to preview
-                                                content data, but don't need to
-                                                make any updates</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-
+                                <!--begin::Roles - will be populated dynamically-->
+                                <div id="user-roles-list" class="d-flex flex-column"></div>
+                                <div class="invalid-feedback d-block" id="error-role_id" style="display:none;"></div>
                                 <!--end::Roles-->
                             </div>
                             <!--end::Input group-->
@@ -386,15 +295,15 @@
                         <!--begin::Actions-->
                         <div class="text-center pt-15">
                             <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">
-                                Discard
+                                Fechar
                             </button>
 
                             <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
                                 <span class="indicator-label">
-                                    Submit
+                                    Submeter
                                 </span>
                                 <span class="indicator-progress">
-                                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    Aguarde... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                 </span>
                             </button>
                         </div>
@@ -510,6 +419,177 @@
                 info.textContent = `Mostrando ${from} a ${to} de ${total} dados`;
             }
 
+            // Carregar roles para o formulário de adicionar usuário
+            async function loadRolesForUserForm() {
+                try {
+                    const response = await api.get('/roles');
+                    const roles = response.data.data || [];
+
+                    const container = document.getElementById('user-roles-list');
+                    container.innerHTML = '';
+
+                    roles.forEach((role, index) => {
+                        const id = `kt_modal_add_user_role_${role.id}`;
+                        const div = document.createElement('div');
+                        div.className = 'd-flex fv-row';
+                        div.innerHTML = `
+                            <div class="form-check form-check-custom form-check-solid">
+                                <input class="form-check-input me-3" name="role_id" type="radio" value="${role.name}" id="${id}" ${index === 0 ? 'checked' : ''}>
+                                <label class="form-check-label" for="${role.id}">
+                                    <div class="fw-bold text-gray-800">${role.name}</div>
+                                    <div class="text-gray-600">${role.guard_name || ''}</div>
+                                </label>
+                            </div>
+                        `;
+
+                        container.appendChild(div);
+
+                        // separator between roles
+                        const sep = document.createElement('div');
+                        sep.className = 'separator separator-dashed my-5';
+                        container.appendChild(sep);
+                    });
+
+                    // remove last separator if exists
+                    if (container.lastElementChild && container.lastElementChild.classList.contains('separator')) {
+                        container.removeChild(container.lastElementChild);
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao carregar roles:', error);
+                    toastr.error('Não foi possível carregar as roles.');
+                }
+            }
+
+            // Handler para submeter criação de usuário
+            
+            // Helper: limpa erros do formulário
+            function clearFormErrors(form) {
+                try {
+                    const invalids = form.querySelectorAll('.is-invalid');
+                    invalids.forEach(el => el.classList.remove('is-invalid'));
+
+                    const feedbacks = form.querySelectorAll('[id^="error-"]');
+                    feedbacks.forEach(f => {
+                        f.textContent = '';
+                        f.style.display = 'none';
+                    });
+                } catch (e) {
+                    // ignore
+                }
+            }
+
+            // Helper: setar erro em um campo por nome (name, email, password, ...)
+            function setFieldError(form, fieldName, message) {
+                const input = form.querySelector(`#${fieldName}`) || form.querySelector(`[name="${fieldName}"]`);
+                const feedback = document.getElementById(`error-${fieldName}`);
+
+                if (input) {
+                    // radios: input may be a NodeList if name matches multiple; handle separately
+                    if (input instanceof NodeList || Array.isArray(input)) {
+                        const first = input[0];
+                        if (first) first.classList.add('is-invalid');
+                    } else {
+                        input.classList.add('is-invalid');
+                    }
+                }
+
+                if (feedback) {
+                    feedback.textContent = message;
+                    feedback.style.display = 'block';
+                } else {
+                    // fallback
+                    toastr.error(message);
+                }
+            }
+
+            async function handleAddUser(event) {
+                event.preventDefault();
+
+                const form = document.getElementById('kt_modal_add_user_form');
+                const submitButton = form.querySelector('[data-kt-users-modal-action="submit"]') || form.querySelector('[type="submit"]');
+
+                // clear previous errors
+                clearFormErrors(form);
+
+                // client-side validation: password confirmation
+                const password = form.querySelector('[name="password"]')?.value || '';
+                const passwordConfirmation = form.querySelector('[name="password_confirmation"]')?.value || '';
+
+                if (!password) {
+                    setFieldError(form, 'password', 'A password é obrigatória.');
+                    return;
+                }
+
+                if (password !== passwordConfirmation) {
+                    setFieldError(form, 'password', 'As passwords não coincidem.');
+                    setFieldError(form, 'password_confirmation', 'As passwords não coincidem.');
+                    return;
+                }
+
+                try {
+                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.disabled = true;
+
+                    const formData = new FormData(form);
+
+                    // Send as multipart/form-data so avatar uploads work
+                    const response = await api.post('/users/registar', {
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        password: formData.get('password'),
+                        password_confirmation: formData.get('password_confirmation'),
+                        role_id: formData.get('role_id'),
+                       // avatar: formData.get('avatar') instanceof File ? formData.get('avatar') : null
+                    });
+
+                    // Success
+                    const modal = document.getElementById('kt_modal_add_user');
+                    const bsModal = bootstrap.Modal.getInstance(modal);
+                    if (bsModal) bsModal.hide();
+
+                    // reload users
+                    loadUsers(1);
+
+                    form.reset();
+                    clearFormErrors(form);
+                    toastr.success('Utilizador criado com sucesso!');
+
+                } catch (error) {
+                    console.error('Erro ao criar utilizador:', error);
+
+                    // If validation errors from backend, map them to form fields
+                    const errs = error.response?.data?.errors;
+                    if (errs && typeof errs === 'object') {
+                        // mapping backend keys to our form field names
+                            const keyMap = {
+                                name: 'name',
+                                email: 'email',
+                                password: 'password',
+                                password_confirmation: 'password_confirmation',
+                                role_id: 'role_id',
+                                role: 'role_id',
+                                avatar: 'avatar'
+                            };
+
+                            Object.keys(errs).forEach(k => {
+                                const mapped = keyMap[k] || k;
+                                const msg = Array.isArray(errs[k]) ? errs[k].join(' ') : String(errs[k]);
+                                setFieldError(form, mapped, msg);
+                            });
+
+                    } else {
+                        let message = 'Não foi possível criar o utilizador.';
+                        if (error.response?.data?.message) message = error.response.data.message;
+                        toastr.error(message);
+                    }
+
+                } finally {
+                    submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.disabled = false;
+                }
+            }
+
             // Função para carregar usuários
             async function loadUsers(pagina) {
                 try {
@@ -537,7 +617,66 @@
 
             loadUsers(1); // Carregar a primeira página ao iniciar
 
-            // Adicionar lógica para adicionar, editar e deletar (usando api.post, api.put, api.delete)
+            // setup modal behaviors: load roles when add-user modal opens
+            const addUserModal = document.getElementById('kt_modal_add_user');
+            if (addUserModal) {
+                // Handler para fechar o modal com os botões
+                const closeButtons = document.querySelectorAll('[data-kt-users-modal-action="close"], [data-kt-users-modal-action="cancel"]');
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const modal = bootstrap.Modal.getInstance(addUserModal);
+                        if (modal) modal.hide();
+                    });
+                });
+
+                addUserModal.addEventListener('shown.bs.modal', () => loadRolesForUserForm());
+
+                // attach submit handler
+                const addUserForm = document.getElementById('kt_modal_add_user_form');
+                if (addUserForm) {
+                    addUserForm.addEventListener('submit', handleAddUser);
+
+                    // clear field errors when user types
+                    addUserForm.querySelectorAll('input, select, textarea').forEach(el => {
+                        el.addEventListener('input', () => {
+                            // if element is a role radio it has name 'role_id'
+                            const key = (el.name === 'role_id') ? 'role_id' : (el.id || el.name);
+                            if (!key) return;
+                            const fb = document.getElementById('error-' + key);
+                            if (fb) {
+                                fb.textContent = '';
+                                fb.style.display = 'none';
+                            }
+                            el.classList.remove('is-invalid');
+                        });
+                    });
+
+                    // clear role errors when user selects a role (radios are dynamic)
+                    const rolesContainer = document.getElementById('user-roles-list');
+                    if (rolesContainer) {
+                        rolesContainer.addEventListener('change', () => {
+                            const fb = document.getElementById('error-role_id');
+                            if (fb) {
+                                fb.textContent = '';
+                                fb.style.display = 'none';
+                            }
+                            const radios = addUserForm.querySelectorAll('[name="role_id"]');
+                            radios.forEach(r => r.classList.remove('is-invalid'));
+                        });
+                    }
+                }
+
+                // clear errors & reset form when modal hides
+                addUserModal.addEventListener('hidden.bs.modal', () => {
+                    const f = document.getElementById('kt_modal_add_user_form');
+                    if (f) {
+                        f.reset();
+                        clearFormErrors(f);
+                    }
+                });
+            }
+
+            // Adicionar lógica para editar e deletar (usando api.put, api.delete) se necessário
         });
     </script>
 @endpush

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,7 +32,39 @@ class UserController extends Controller
             'password' => Hash::make($request->password), 
         ]);
 
+        // Atribuir roles ou permissões se fornecido
+        if ($request->has('role_id')) {
+            $user->assignRole($request->role_id);
+        }
+        if ($request->has('permissions')) {
+            $user->givePermissionTo($request->permissions);
+        }
+
         return new UserResource($user);
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+         // Atribuir roles ou permissões se fornecido
+        if ($request->has('role_id')) {
+            $user->assignRole($request->role_id);
+        }
+
+        //$token = $this->make('auth')->guard('api')->login($user);
+        return new UserResource($user);
+        //return $this->respondWithToken($token);
     }
 
     // 3. Mostrar detalhe: /api/users/{user} (GET)

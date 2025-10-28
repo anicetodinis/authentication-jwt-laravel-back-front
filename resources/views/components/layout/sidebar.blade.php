@@ -22,17 +22,14 @@
             data-kt-menu-placement="bottom-start">
             <!--begin::User-->
             <div class="cursor-pointer symbol symbol-35px symbol-lg-40px me-3 ms-n2">
-                <img class="" src="{{ asset('assets/media/avatars/300-3.jpg') }}" alt="user">
+                <div class="symbol-label bg-light-primary text-primary fs-5 fw-bold" id="sidebar-user-initials">...</div>
             </div>
             <!--end::User-->
 
             <!--begin:Info-->
             <div class="d-flex flex-column align-items-start flex-grow-1">
-                <a href="#"
-                    class="btn-title fs-6 fw-bold">{{ auth()->user()->name ?? '-------' }}</a>
-
-                <a href="#"
-                    class="btn-desc fs-7 fw-bold d-block">{{ auth()->user()->role ?? '-------' }}</a>
+                <a href="#" class="btn-title fs-6 fw-bold" id="sidebar-user-name">Carregando...</a>
+                <a href="#" class="btn-desc fs-7 fw-bold d-block" id="sidebar-user-email"></a>
             </div>
             <!--end:Info-->
 
@@ -47,19 +44,18 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        <img alt="Logo" src="assets/media/avatars/300-3.jpg">
+                                        <div class="symbol-label bg-light-primary text-primary fs-3 fw-bold" id="sidebar-menu-user-initials">...</div>
                                     </div>
                                     <!--end::Avatar-->
 
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bold d-flex align-items-center fs-5">
-                                            Mario <!-- <span
-                                                class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span> -->
+                                        <div class="fw-bold d-flex align-items-center fs-5" id="sidebar-menu-user-name">
+                                            Carregando...
                                         </div>
 
-                                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
-                                            Tecnico </a>
+                                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7" id="sidebar-menu-user-email">
+                                            </a>
                                     </div>
                                     <!--end::Username-->
                                 </div>
@@ -164,7 +160,7 @@
 
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="#" class="menu-link px-5">
+                                <a href="#" onclick="logout()" class="menu-link px-5">
                                     Sair
                                 </a>
                             </div>
@@ -262,6 +258,53 @@
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Lista</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                            </div>
+                            <!--end:Menu sub-->
+                        </div>
+                        <!--end:Menu item-->
+
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="click"
+                            class="menu-item {{ request()->is('users*') ? 'here show' : '' }} menu-accordion mb-1">
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Settings</span>
+                                <span class="menu-arrow"></span>
+                            </span>
+                            <!--end:Menu link-->
+                            
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link {{ request()->routeIs('settings.roles') ? 'active' : '' }}"
+                                        href="{{ route('settings.roles') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Roles</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link {{ request()->routeIs('settings.permissions') ? 'active' : '' }}"
+                                        href="{{ route('settings.permissions') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Permissões</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>

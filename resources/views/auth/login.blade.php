@@ -9,7 +9,7 @@
 
 <body class="d-flex flex-column flex-root">
     <div class="d-flex flex-column flex-column-fluid flex-lg-row">
-        <div class="d-flex flex-center w-lg-50 p-10">
+        <div class="d-flex flex-center w-lg-100 p-10">
             <div class="card p-10 w-100 w-lg-500px">
                 <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/dashboard"
                     action="#">

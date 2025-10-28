@@ -25,4 +25,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', function () {
         return redirect()->route('login');
     });
+
+    // Rotas de Gestão de Configurações
+    Route::get('/settings/roles', function () {
+        return view('app.settings.roles');
+    })->name('settings.roles');
+
+    Route::get('/settings/permissions', function () {
+        return view('app.settings.permissions');
+    })->name('settings.permissions');
 });
