@@ -63,42 +63,42 @@ contenciosos-app/
 ## Instalação e Configuração
 
 1. Clone o repositório:
-\`\`\`bash
+```bash
 git clone [url-do-repositorio]
-\`\`\`
+```
 
 2. Instale as dependências PHP:
-\`\`\`bash
+```bash
 composer install
-\`\`\`
+```
 
 3. Instale as dependências JavaScript:
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 4. Configure o ambiente:
-\`\`\`bash
+```bash
 cp .env.example .env
 php artisan key:generate
-\`\`\`
+```
 
 5. Configure o banco de dados no arquivo .env
 
 6. Execute as migrations e seeders:
-\`\`\`bash
+```bash
 php artisan migrate:fresh --seed
-\`\`\`
+```
 
 7. Gere a chave JWT:
-\`\`\`bash
+```bash
 php artisan jwt:secret
-\`\`\`
+```
 
 ## Comandos Úteis
 
 ### Desenvolvimento
-\`\`\`bash
+```bash
 # Iniciar servidor de desenvolvimento
 php artisan serve
 
@@ -122,7 +122,7 @@ php artisan make:resource RoleResource
 
 # Criar novo model com migration
 php artisan make:model Nome -m
-\`\`\`
+```
 
 ## Fluxo de Desenvolvimento
 
