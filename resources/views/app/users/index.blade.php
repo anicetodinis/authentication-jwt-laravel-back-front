@@ -318,9 +318,65 @@
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - Add task-->
+
+    @include('components.users.modals')
 @endsection
 
 @push('scripts')
+    <script>
+        // Funções globais para editar e deletar usuário
+        async function handleEditUser(userId) {
+            try {
+                // Buscar dados do usuário
+                const response = await api.get(`/users/${userId}`);
+                const user = response.data.data;
+
+                // Preencher o formulário
+                const form = document.getElementById('kt_modal_edit_user_form');
+                form.querySelector('#edit_user_id').value = user.id;
+                form.querySelector('#edit_name').value = user.name;
+                form.querySelector('#edit_email').value = user.email;
+                
+                // Carregar roles
+                await window.loadRolesForEditUserForm(user.roles[0]?.name);
+
+                // Abrir o modal
+                const modal = new bootstrap.Modal(document.getElementById('kt_modal_edit_user'));
+                modal.show();
+            } catch (error) {
+                console.error('Erro ao carregar dados do usuário:', error);
+                toastr.error('Não foi possível carregar os dados do usuário.');
+            }
+        }
+
+        async function handleDeleteUser(userId) {
+            // Abrir modal de confirmação
+            const modal = new bootstrap.Modal(document.getElementById('kt_modal_delete_user'));
+            modal.show();
+
+            // Configurar botão de delete
+            const deleteButton = document.querySelector('[data-kt-users-modal-action="delete"]');
+            deleteButton.onclick = async () => {
+                try {
+                    deleteButton.setAttribute('data-kt-indicator', 'on');
+                    deleteButton.disabled = true;
+
+                    await api.delete(`/users/${userId}`);
+                    
+                    modal.hide();
+                    window.loadUsers(1);
+                    toastr.success('Utilizador eliminado com sucesso!');
+
+                } catch (error) {
+                    console.error('Erro ao eliminar utilizador:', error);
+                    toastr.error(error.response?.data?.message || 'Não foi possível eliminar o utilizador.');
+                } finally {
+                    deleteButton.removeAttribute('data-kt-indicator');
+                    deleteButton.disabled = false;
+                }
+            };
+        }
+    </script>
     <script type="module">
         // import api from '{{ asset('js/api.js') }}'; 
 
@@ -342,15 +398,19 @@
                 const tdActions = document.createElement('td');
                 tdActions.className = 'text-end';
 
-                // Actions dropdown (simplified)
+                // Actions dropdown with event handlers
                 tdActions.innerHTML = `
                     <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                         Acções
                         <i class="ki-duotone ki-down fs-5 ms-1"></i>
                     </a>
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                        <div class="menu-item px-3"><a href="#" class="menu-link px-3">Editar</a></div>
-                        <div class="menu-item px-3"><a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Eliminar</a></div>
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3" onclick="handleEditUser(${user.id})">Editar</a>
+                        </div>
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3 text-danger" onclick="handleDeleteUser(${user.id})">Eliminar</a>
+                        </div>
                     </div>
                 `;
 
@@ -591,7 +651,7 @@
             }
 
             // Função para carregar usuários
-            async function loadUsers(pagina) {
+            window.loadUsers = async function(pagina) {
                 try {
                     const response = await api.get('/users?page=' + (pagina || 1));
                     const users = response.data.data; // Dados formatados pelo UserResource
@@ -676,7 +736,211 @@
                 });
             }
 
-            // Adicionar lógica para editar e deletar (usando api.put, api.delete) se necessário
+            // Funções para editar usuário
+            async function handleEditUser(userId) {
+                try {
+                    // Buscar dados do usuário
+                    const response = await api.get(`/users/${userId}`);
+                    const user = response.data.data;
+
+                    // Preencher o formulário
+                    const form = document.getElementById('kt_modal_edit_user_form');
+                    form.querySelector('#edit_user_id').value = user.id;
+                    form.querySelector('#edit_name').value = user.name;
+                    form.querySelector('#edit_email').value = user.email;
+                    
+                    // Carregar roles
+                    await loadRolesForEditUserForm(user.roles[0]?.name);
+
+                    // Abrir o modal
+                    const modal = new bootstrap.Modal(document.getElementById('kt_modal_edit_user'));
+                    modal.show();
+                } catch (error) {
+                    console.error('Erro ao carregar dados do usuário:', error);
+                    toastr.error('Não foi possível carregar os dados do usuário.');
+                }
+            }
+
+            // Carregar roles para o formulário de edição
+            window.loadRolesForEditUserForm = async function(selectedRole) {
+                try {
+                    const response = await api.get('/roles');
+                    const roles = response.data.data || [];
+
+                    const container = document.getElementById('edit-user-roles-list');
+                    container.innerHTML = '';
+
+                    roles.forEach((role) => {
+                        const id = `kt_modal_edit_user_role_${role.id}`;
+                        const div = document.createElement('div');
+                        div.className = 'd-flex fv-row';
+                        div.innerHTML = `
+                            <div class="form-check form-check-custom form-check-solid">
+                                <input class="form-check-input me-3" name="role_id" type="radio" value="${role.name}" 
+                                    id="${id}" ${role.name === selectedRole ? 'checked' : ''}>
+                                <label class="form-check-label" for="${role.id}">
+                                    <div class="fw-bold text-gray-800">${role.name}</div>
+                                    <div class="text-gray-600">${role.guard_name || ''}</div>
+                                </label>
+                            </div>
+                        `;
+
+                        container.appendChild(div);
+
+                        const sep = document.createElement('div');
+                        sep.className = 'separator separator-dashed my-5';
+                        container.appendChild(sep);
+                    });
+
+                    if (container.lastElementChild?.classList.contains('separator')) {
+                        container.removeChild(container.lastElementChild);
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar roles:', error);
+                    toastr.error('Não foi possível carregar as roles.');
+                }
+            }
+
+            // Handler para submeter edição de usuário
+            async function handleEditUserSubmit(event) {
+                event.preventDefault();
+
+                const form = document.getElementById('kt_modal_edit_user_form');
+                const submitButton = form.querySelector('[data-kt-users-modal-action="submit"]');
+                const userId = form.querySelector('#edit_user_id').value;
+
+                clearFormErrors(form);
+
+                const password = form.querySelector('#edit_password').value;
+                const passwordConfirmation = form.querySelector('#edit_password_confirmation').value;
+
+                if (password && password !== passwordConfirmation) {
+                    setFieldError(form, 'edit_password', 'As passwords não coincidem.');
+                    setFieldError(form, 'edit_password_confirmation', 'As passwords não coincidem.');
+                    return;
+                }
+
+                try {
+                    submitButton.setAttribute('data-kt-indicator', 'on');
+                    submitButton.disabled = true;
+
+                    const formData = new FormData(form);
+                    const data = {
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        role_id: formData.get('role_id')
+                    };
+
+                    // Só incluir password se foi preenchida
+                    if (password) {
+                        data.password = password;
+                        data.password_confirmation = passwordConfirmation;
+                    }
+
+                    await api.put(`/users/${userId}`, data);
+
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('kt_modal_edit_user'));
+                    modal.hide();
+
+                    loadUsers(1);
+                    toastr.success('Utilizador atualizado com sucesso!');
+
+                } catch (error) {
+                    console.error('Erro ao atualizar utilizador:', error);
+
+                    const errs = error.response?.data?.errors;
+                    if (errs && typeof errs === 'object') {
+                        const keyMap = {
+                            name: 'edit_name',
+                            email: 'edit_email',
+                            password: 'edit_password',
+                            password_confirmation: 'edit_password_confirmation',
+                            role_id: 'edit_role_id'
+                        };
+
+                        Object.keys(errs).forEach(k => {
+                            const mapped = keyMap[k] || k;
+                            const msg = Array.isArray(errs[k]) ? errs[k].join(' ') : String(errs[k]);
+                            setFieldError(form, mapped, msg);
+                        });
+                    } else {
+                        toastr.error(error.response?.data?.message || 'Não foi possível atualizar o utilizador.');
+                    }
+                } finally {
+                    submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.disabled = false;
+                }
+            }
+
+            // Função para deletar usuário
+            async function handleDeleteUser(userId) {
+                // Abrir modal de confirmação
+                const modal = new bootstrap.Modal(document.getElementById('kt_modal_delete_user'));
+                modal.show();
+
+                // Configurar botão de delete
+                const deleteButton = document.querySelector('[data-kt-users-modal-action="delete"]');
+                deleteButton.onclick = async () => {
+                    try {
+                        deleteButton.setAttribute('data-kt-indicator', 'on');
+                        deleteButton.disabled = true;
+
+                        await api.delete(`/users/${userId}`);
+                        
+                        modal.hide();
+                        loadUsers(1);
+                        toastr.success('Utilizador eliminado com sucesso!');
+
+                    } catch (error) {
+                        console.error('Erro ao eliminar utilizador:', error);
+                        toastr.error(error.response?.data?.message || 'Não foi possível eliminar o utilizador.');
+                    } finally {
+                        deleteButton.removeAttribute('data-kt-indicator');
+                        deleteButton.disabled = false;
+                    }
+                };
+            }
+
+            // Setup do modal de edição
+            const editUserModal = document.getElementById('kt_modal_edit_user');
+            if (editUserModal) {
+                // Handlers para fechar o modal
+                const closeButtons = editUserModal.querySelectorAll('[data-kt-users-modal-action="close"], [data-kt-users-modal-action="cancel"]');
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const modal = bootstrap.Modal.getInstance(editUserModal);
+                        if (modal) modal.hide();
+                    });
+                });
+
+                // Handler de submit
+                const editUserForm = document.getElementById('kt_modal_edit_user_form');
+                if (editUserForm) {
+                    editUserForm.addEventListener('submit', handleEditUserSubmit);
+
+                    // Limpar erros ao digitar
+                    editUserForm.querySelectorAll('input, select, textarea').forEach(el => {
+                        el.addEventListener('input', () => {
+                            const key = (el.name === 'role_id') ? 'edit_role_id' : (el.id || 'edit_' + el.name);
+                            const fb = document.getElementById('error-' + key);
+                            if (fb) {
+                                fb.textContent = '';
+                                fb.style.display = 'none';
+                            }
+                            el.classList.remove('is-invalid');
+                        });
+                    });
+                }
+
+                // Limpar form ao fechar
+                editUserModal.addEventListener('hidden.bs.modal', () => {
+                    const form = document.getElementById('kt_modal_edit_user_form');
+                    if (form) {
+                        form.reset();
+                        clearFormErrors(form);
+                    }
+                });
+            }
         });
     </script>
 @endpush

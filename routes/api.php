@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 // Rotas de Autenticação (Públicas)
 Route::controller(AuthController::class)->group(function () {
-    Route::post('register', 'register');
+    //Route::post('register', 'register');
     Route::post('login', 'login');
 });
 
@@ -26,11 +26,12 @@ Route::middleware('auth:api')->group(function () {
         
         // Exige que o usuário tenha a role 'admin'
         Route::get('/', 'index')->middleware('role:admin'); 
+        Route::get('/{id}', 'index')->middleware('role:admin');
         
         // Exige a permissão 'create users'
         Route::post('/', 'store')->middleware('permission:create users'); 
 
-        Route::post('/registar', 'register')->middleware('permission:create users'); 
+        Route::post('/registar', 'store')->middleware('permission:create users'); 
         
         // Exige a permissão 'edit users' ou a role 'super-admin'
         Route::put('/{user}', 'update')->middleware('role_or_permission:super-admin|edit users'); 

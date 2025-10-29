@@ -15,8 +15,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id=null)
     {
+        if ($id) {
+            $user = User::findOrFail($id);
+            return new UserResource($user);
+        }
         // Exemplo de paginação
         $users = User::paginate(10); 
         return UserResource::collection($users);
