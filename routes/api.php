@@ -7,11 +7,18 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\PermissionController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Web\DashboardController;
+
+
+// Endpoint para criar sessão web a partir do token JWT (chamado pelo frontend após login)
+Route::middleware([\Illuminate\Session\Middleware\StartSession::class])
+    ->post('session', [DashboardController::class, 'webLogin'])->name('web.session.login');
+
+
+Route::post('login', [AuthController::class, 'login']);
+
 // Rotas de Autenticação (Públicas)
-Route::controller(AuthController::class)->group(function () {
-    //Route::post('register', 'register');
-    Route::post('login', 'login');
-});
+
 
 // Rotas Protegidas (Exige Token JWT Válido)
 Route::middleware('auth:api')->group(function () {
@@ -25,8 +32,8 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('users')->controller(UserController::class)->group(function () {
         
         // Exige que o usuário tenha a role 'admin'
-        Route::get('/', 'index')->middleware('role:admin'); 
-        Route::get('/{id}', 'index')->middleware('role:admin');
+        Route::get('/', 'index')->middleware('role:admin|super-admin'); 
+        Route::get('/{id}', 'index')->middleware('role:admin|super-admin');
         
         // Exige a permissão 'create users'
         Route::post('/', 'store')->middleware('permission:create users'); 

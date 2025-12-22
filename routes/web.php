@@ -1,37 +1,29 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\DashboardController;
 
 // Rota de Login (Pública)
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login'); //->middleware('CheckToken');
+Route::get('/login', [DashboardController::class, 'login'])->name('login');
 
-// Rotas Protegidas (Dashboard e CRUD de Utilizadores)
-Route::group(['middleware' => ['web']], function () {
+// Endpoint para criar sessão web a partir do token JWT (chamado pelo frontend após login)
+Route::post('/session', [DashboardController::class, 'webLogin'])->name('web.session.login');
+Route::post('/session/logout', [DashboardController::class, 'webLogout'])->name('web.session.logout');
 
-    // Dashboard
-    Route::get('/dashboard', function () {
-        return view('app.dashboard'); // Usará o layout mestre
-    })->name('dashboard');
+// Redirecionar a raiz para dashboard ou login
+Route::get('/', function () {
+    return auth('web')->check() 
+        ? redirect()->route('dashboard') 
+        : redirect()->route('login');
+});
 
-    // CRUD de Utilizadores
-    Route::get('/users', function () {
-        return view('app.users.index'); // Onde ficará a lista de utilizadores
-    })->name('users.index');
+// Rotas Protegidas (Requerem Sessão Web OU JWT Token)
+// O middleware é aplicado no construtor do controller
+//Route::middleware('auth:web', 'permission:manage roles')->group(function () {
+Route::middleware('auth:web', 'role:admin|super-admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/users', [DashboardController::class, 'usersIndex'])->name('users.index');
+    Route::get('/settings/roles', [DashboardController::class, 'settingsRoles'])->name('settings.roles');
+    Route::get('/settings/permissions', [DashboardController::class, 'settingsPermissions'])->name('settings.permissions'); 
 
-    // Redirecionar a raiz para login
-    Route::get('/', function () {
-        return redirect()->route('login');
-    });
-
-    // Rotas de Gestão de Configurações
-    Route::get('/settings/roles', function () {
-        return view('app.settings.roles');
-    })->name('settings.roles');
-
-    Route::get('/settings/permissions', function () {
-        return view('app.settings.permissions');
-    })->name('settings.permissions');
 });

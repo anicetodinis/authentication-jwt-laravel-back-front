@@ -12,14 +12,25 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Middleware global para web
+        $middleware->web(append: [
+            \App\Http\Middleware\PassJwtTokenFromLocalStorage::class,
+            \App\Http\Middleware\HandleJwtExceptions::class,
+        ]);
+
+        // Isentar rota /session de CSRF (é chamada logo após login com JWT válido)
+        $middleware->validateCsrfTokens(except: [
+            'session',            
+            'session/logout',
+        ]);
+
         $middleware->alias([
-            // ... outros aliases ...
-            
-            // Adicione os aliases do Spatie
+            // Aliases do Spatie para permissões
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'check_jwt' => \App\Http\Middleware\CheckJwtToken::class,
+            'web_or_jwt_auth' => \App\Http\Middleware\EnsureWebOrJwtAuth::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

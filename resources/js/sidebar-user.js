@@ -47,11 +47,15 @@ function updateSidebarUserUI(userData) {
 }
 
 // Carregar os dados do usuário quando o documento estiver pronto
-document.addEventListener('DOMContentLoaded', async function() {
+ document.addEventListener('DOMContentLoaded', async function() {
+    /* const initials = getInitials(@js($user->name ?? ''));
+
+     const sidebarInitials = document.getElementById('sidebar-user-initials');
+    if (sidebarInitials) sidebarInitials.textContent = initials; */
     // Verifica se existe um token JWT no localStorage
-    const token = localStorage.getItem('jwt_token');
+    /*const token = localStorage.getItem('jwt_token');
     
-    if (token) {
+    if (token1) {
         try {
             const response = await api.get('/me');
             // Verificar se temos dados válidos na resposta
@@ -72,5 +76,5 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     } else {
         console.log('Nenhuma sessão de usuário encontrada');
-    }
-});
+    }*/
+}); 

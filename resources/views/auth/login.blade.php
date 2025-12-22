@@ -3,8 +3,9 @@
 
 <head>
     <title>Login - Open HTML Pro</title>
+    <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css">
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/api.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/login.js'])
 </head>
 
 <body class="d-flex flex-column flex-root">
@@ -41,41 +42,56 @@
 
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
-    <script type="module">
-        //import api from '/js/api.js';
+    <script>
+        // Esperar que o Vite carregue os módulos (authManager estará disponível)
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('kt_sign_in_form').addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-        document.getElementById('kt_sign_in_form').addEventListener('submit', async (e) => {
-            e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                if(!email || !password){
+                    toastr.error('Por favor, preenha todos os campos.');
+                    return;
+                }
 
-            const submitButton = document.getElementById('kt_sign_in_submit');
-            submitButton.setAttribute('data-kt-indicator', 'on');
-            submitButton.disabled = true;
+                const submitButton = document.getElementById('kt_sign_in_submit');
+                submitButton.setAttribute('data-kt-indicator', 'on');
+                submitButton.disabled = true;
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+                try {
+                    const response = await login.post('/login', {
+                        email,
+                        password
+                    });
 
-            try {
-                alert('Iniciando login...');
-                const response = await api.post('/login', {
-                    email,
-                    password
-                });
+                    // Sucesso: Armazenar o token usando AuthManager
+                    const token = response.data.access_token;
+                    if (window.authManager) {
+                        window.authManager.saveToken(token);
+                    } else {
+                        localStorage.setItem('jwt_token', token);
+                    }
 
-                // Sucesso: Armazenar o token
-                localStorage.setItem('jwt_token', response.data.access_token);
+                    // Criar sessão web a partir do token JWT
+                    try {
+                        await axios.post('/session', { token });
+                    } catch (err) {
+                        console.warn('Erro ao criar sessão web:', err);
+                    }
 
-                // Redirecionar para o Dashboard
-                window.location.href = '/dashboard';
+                    // Redirecionar para dashboard
+                    window.location.href = '/dashboard';
+            
+                } catch (error) {
+                    console.log('Login Failed:', error);
+                    toastr.error('Credenciais inválidas.');
 
-            } catch (error) {
-                console.log('Login Failed:');
-                // Mostrar mensagem de erro
-                alert('Credenciais inválidas.');
-
-            } finally {
-                submitButton.removeAttribute('data-kt-indicator');
-                submitButton.disabled = false;
-            }
+                } finally {
+                    submitButton.removeAttribute('data-kt-indicator');
+                    submitButton.disabled = false;
+                }
+            });
         });
     </script>
 </body>
