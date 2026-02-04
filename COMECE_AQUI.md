@@ -325,14 +325,6 @@ Se encontrar qualquer problema:
 
 ## 📅 Informações
 
-**Data de Implementação**: 8 de Dezembro de 2025
-**Versão**: 1.0
-**Status**: ✅ Pronto para Produção
-**Desenvolvido por**: GitHub Copilot
-**Repositório**: SGCJA (branch: dev-aniceto)
-
----
-
 ```
 ╔════════════════════════════════════════════════════════════╗
 ║                                                            ║
@@ -348,4 +340,3 @@ Se encontrar qualquer problema:
 ╚════════════════════════════════════════════════════════════╝
 ```
 
-**Obrigado por usar esta implementação! 🙌**

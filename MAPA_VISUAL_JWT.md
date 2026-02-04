@@ -318,8 +318,4 @@
 └─────────────────────────────────────────────────┘
 ```
 
----
 
-**Última atualização**: 8 de Dezembro de 2025
-**Versão**: 1.0
-**Desenvolvido por**: GitHub Copilot
