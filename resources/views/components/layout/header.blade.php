@@ -13,7 +13,7 @@
 
             <!--begin::Logo image-->
             <a href="{{ route('dashboard') }}">
-                <img alt="Logo" src="{{ asset('assets/media/logos/') }}" class="h-30px">
+                <img alt="Logo" src="{{ asset('assets/media/logos/logo.png') }}" class="h-30px">
             </a>
             <!--end::Logo image-->
         </div>

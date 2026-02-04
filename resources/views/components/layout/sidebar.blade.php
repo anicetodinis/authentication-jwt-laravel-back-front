@@ -34,7 +34,7 @@ function getInitials(string $name = ''): string
         <div class="d-flex flex-stack d-none d-lg-flex mb-13">
             <!--begin::Logo-->
             <a href="{{ route('dashboard') }}" class="app-sidebar-logo">
-                <img alt="Logo" src="{{ asset('assets/ddddd.png') }}" height="128"
+                <img alt="Logo" src="{{ asset('assets/media/logos/logo.png') }}" height="128"
                     class="app-sidebar-logo-default">
             </a>
             <!--end::Logo-->

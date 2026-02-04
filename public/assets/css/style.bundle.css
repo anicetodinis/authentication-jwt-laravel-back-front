@@ -58802,11 +58802,11 @@ a:hover {
 }
 
 [data-bs-theme=light] {
-  --bs-app-bg-color: #ffffff;
+  --bs-app-bg-color: #f7f7fa; /* #ffffff **/
   --bs-app-blank-bg-color: #ffffff;
   --bs-app-header-base-bg-color: #ffffff;
   --bs-app-header-minimize-bg-color: rgba(255, 255, 255, 0.5);
-  --bs-app-sidebar-base-bg-color: #6E1C3F;/* c30000  c30000e3*/
+  --bs-app-sidebar-base-bg-color: #000000;/* 6E1C3F c30000  c30000e3*/
   --bs-app-sidebar-base-box-shadow: none;
 }
 
