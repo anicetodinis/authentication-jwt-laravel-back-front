@@ -7,11 +7,11 @@ Sistema de gestão de contenciosos desenvolvido com Laravel e Vue.js, utilizando
 ## Tecnologias Utilizadas
 
 ### Backend
-- Laravel 10.x
+- Laravel 12.x
 - PHP 8.1+
 - JWT Authentication
 - Spatie Laravel Permission
-- MySQL/MariaDB
+- SQLite
 
 ### Frontend
 - Vue.js
@@ -28,7 +28,7 @@ Sistema de gestão de contenciosos desenvolvido com Laravel e Vue.js, utilizando
 ## Estrutura do Projeto
 
 ```
-contenciosos-app/
+./
 ├── app/                    # Código principal da aplicação
 │   ├── Http/              # Controllers, Middleware, Resources
 │   ├── Models/            # Models do Eloquent
@@ -307,5 +307,10 @@ Para reportar bugs ou sugerir melhorias, abra uma issue no repositório do proje
 ## Licença
 
 Este projeto é software proprietário. Todos os direitos reservados.
+
+## 👨‍💻 Autores e Agradecimentos
+Esta Codigo foi desenvolvido por **Aniceto Dinis Munguambe**.
+- 📞 Contacto: +258 84 477 9483  
+- 🔗 LinkedIn: LinkedIn: [aniceto-dinis-munguambe-81b32321a](https://www.linkedin.com/in/aniceto-dinis-munguambe-81b32321a/)
 
 
