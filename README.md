@@ -2,7 +2,7 @@
 
 ## Sobre o Projeto
 
-Sistema de gestão de contenciosos desenvolvido com Laravel e Vue.js, utilizando o tema Metronic para a interface do usuário. O sistema implementa autenticação JWT, controle de acesso baseado em roles e permissões, e uma arquitetura modular para fácil manutenção e escalabilidade.
+Sistema de gestão desenvolvido com Laravel e Vue.js, utilizando o tema Metronic para a interface do usuário. O sistema implementa autenticação JWT, controle de acesso baseado em roles e permissões, e uma arquitetura modular para fácil manutenção e escalabilidade.
 
 ## Tecnologias Utilizadas
 
