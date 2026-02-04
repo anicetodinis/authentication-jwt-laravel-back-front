@@ -3,7 +3,7 @@
     data-kt-sticky-animation="false">
 
     <!--begin::Header container-->
-    <div class="app-container  container-fluid d-flex align-items-stretch flex-stack " id="kt_app_header_container">
+    <div class=" container-fluid d-flex align-items-stretch flex-stack " id="kt_app_header_container">
         <!--begin::Sidebar toggle-->
         <div class="d-flex align-items-center d-block d-lg-none ms-n3" title="Show sidebar menu">
             <div class="btn btn-icon btn-color-gray-600 btn-active-color-primary w-35px h-35px me-1"
@@ -13,7 +13,7 @@
 
             <!--begin::Logo image-->
             <a href="{{ route('dashboard') }}">
-                <img alt="Logo" src="{{ asset('assets/media/logos/default-dark.svg') }}" class="h-30px">
+                <img alt="Logo" src="{{ asset('assets/media/logos/') }}" class="h-30px">
             </a>
             <!--end::Logo image-->
         </div>

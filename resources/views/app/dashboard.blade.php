@@ -92,8 +92,8 @@
                 <div class="card-header">
                     <!--begin::Card title-->
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold text-dark">Bem-vindo ao SGCJA</span>
-                        <span class="text-gray-400 mt-1 fw-semibold fs-6">Sistema de Gestão de Conteciosos</span>
+                        <span class="card-label fw-bold text-dark">Bem-vindo</span>
+                        <span class="text-gray-400 mt-1 fw-semibold fs-6">Sistema de Gestão</span>
                     </h3>
                     <!--end::Card title-->
                 </div>

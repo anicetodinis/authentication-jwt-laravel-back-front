@@ -7,7 +7,7 @@
 
     <!--begin::Toolbar container-->
     <div id="kt_app_toolbar_container"
-        class="app-container  container-fluid d-flex flex-lg-column py-3 py-lg-6 ">
+        class="container-fluid d-flex flex-lg-column py-3 py-lg-6 ">
 
         <!--begin::Page title-->
         <div class="page-title d-flex align-items-center gap-1 me-3" data-kt-swapper="true"
