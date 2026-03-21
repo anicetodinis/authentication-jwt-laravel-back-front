@@ -1,4 +1,4 @@
-# Sistema de Gestão de Contenciosos
+# Sistema de Gestão
 
 ## Sobre o Projeto
 
