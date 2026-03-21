@@ -5,10 +5,14 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\PermissionController;
+use App\Http\Controllers\SwaggerController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Web\DashboardController;
 
+
+// Rotas de Documentação (Públicas)
+Route::get('documentation', [SwaggerController::class, 'json']);
 
 // Endpoint para criar sessão web a partir do token JWT (chamado pelo frontend após login)
 Route::middleware([\Illuminate\Session\Middleware\StartSession::class])

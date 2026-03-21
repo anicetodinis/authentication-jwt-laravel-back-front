@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\SwaggerController;
+
+// Rota de Documentação Swagger (Pública)
+Route::get('/api/docs', [SwaggerController::class, 'ui'])->name('swagger.ui');
 
 // Rota de Login (Pública)
 Route::get('/login', [DashboardController::class, 'login'])->name('login');
